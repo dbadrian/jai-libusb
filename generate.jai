@@ -24,15 +24,6 @@ DECLARATIONS_TO_OMIT :: string.[
 }
 
 generate_bindings :: () -> bool {
-    // #if COMPILE {
-    //     src_files: [..] string;
-    //     array_add(*src_files, tprint("%/sqlite3.c", LIBUSB_PATH));
-	// 	make_directory_if_it_does_not_exist(LIB_PATH);
-	// 	lib_name := tprint("%/sqlite", LIB_PATH);
-	// 	build_cpp_dynamic_lib(lib_name, ..src_files, debug=COMPILE_DEBUG);
-	// 	build_cpp_static_lib(lib_name, ..src_files, debug=COMPILE_DEBUG);
-    // }
-
     output_filename: string;
     opts: Generate_Bindings_Options;
     {
@@ -49,12 +40,9 @@ generate_bindings :: () -> bool {
             assert(false);
         }
 
-        // array_add(*libnames, "libusb-1.0");
         array_add(*system_include_paths, GENERATOR_DEFAULT_SYSTEM_INCLUDE_PATH);
         array_add(*include_paths, LIBUSB_PATH);
         array_add(*source_files, tprint("%/libusb.h", LIBUSB_PATH));
-
-        // footer = CODE_SUFFIX;
         visitor = libusb_vistor;
         
         try_to_preserve_comments = true;
@@ -84,15 +72,3 @@ libusb_vistor :: (decl: *Declaration, parent_decl: *Declaration) -> Declaration_
 #import "File";
 #import "String";
 #import "System";
-
-CODE_SUFFIX :: #string END
-
-#if OS == .WINDOWS {
-    // libvulkan :: #library "win/vulkan-1";
-} else #if OS == .LINUX {
-    libvulkan :: #system_library "libusb-1.0.so";
-} else {
-    #assert(false);
-}
-
-END

@@ -26,8 +26,7 @@ libusb_config_descriptor :: struct {
 
 #if OS == .WINDOWS {
     #load "generated_windows.jai";
-    // TODO : WINDOWS
-    // libvulkan :: #library "win/vulkan-1";
+    // TODO
 } else #if OS == .LINUX {
     #load "generated_linux.jai";
     libusb :: #system_library "libusb-1.0";
